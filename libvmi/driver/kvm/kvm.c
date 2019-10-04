@@ -84,12 +84,11 @@ exec_qmp_cmd(
     char *query)
 {
     char *output = NULL;
-    
+
     dbprint(VMI_DEBUG_KVM, "--qmp: %s\n", query);
 
     int ret = kvm->libvirt.virDomainQemuMonitorCommand(kvm->dom, query, &output, VIR_DOMAIN_QEMU_MONITOR_COMMAND_DEFAULT);
     if (ret < 0) {
- 
         errprint("Failed to execute qemu monitor command\n");
         return NULL;
     }
@@ -114,7 +113,7 @@ exec_info_version(
         "{\"execute\": \"query-version\"}";
     char *output = exec_qmp_cmd(kvm, query);
     struct json_object *jobj = NULL;
-       
+
     if (output) {
         jobj = json_tokener_parse(output);
         free(output);
